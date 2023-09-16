@@ -1,4 +1,9 @@
-Label
+Timer
+CollisionPolygon2D
+AnimatedSprite2D
+Area2D
 CollisionShape2D
+RigidBody2D
+Label
 Sprite2D
 CharacterBody2D

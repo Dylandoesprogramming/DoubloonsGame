@@ -1,3 +1,10 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1694846098
+::res://::1694849613
 icon.svg::CompressedTexture2D::8415143373963547232::1694646641::1694646646::1::::<><>::
+::res://Assets/::1694847199
+::res://Assets/Art/::1694847204
+::res://Assets/Art/DevArt/::1694848850
+PlayerShipForward.png::CompressedTexture2D::6468578207695250836::1694848527::1694848850::1::::<><>::
+PlayerShipForwardFireBoth.png::CompressedTexture2D::1338425672333229926::1694848685::1694848850::1::::<><>::
+PlayerShipForwardFireLeft.png::CompressedTexture2D::2082994013367698151::1694848773::1694848850::1::::<><>::
+PlayerShipForwardFireRight.png::CompressedTexture2D::8944407345441310176::1694848751::1694848850::1::::<><>::
