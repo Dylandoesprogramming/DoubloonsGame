@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://yco6txv2hf8i"]
+
+[ext_resource type="PackedScene" uid="uid://bg0ggxpjtfkvg" path="res://PlayerShip.tscn" id="1_y8t6h"]
+[ext_resource type="PackedScene" uid="uid://b8llxfxyvwslx" path="res://EnemyShip.tscn" id="3_tcb52"]
+
+[node name="Main" type="Node"]
+
+[node name="PlayerShip" parent="." instance=ExtResource("1_y8t6h")]
+position = Vector2(278, 491)
+
+[node name="EnemyShip" parent="." instance=ExtResource("3_tcb52")]
+position = Vector2(740, 509)
+MaxSpeed = 10.0

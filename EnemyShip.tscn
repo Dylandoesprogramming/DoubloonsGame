@@ -1,17 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://bg0ggxpjtfkvg"]
+[gd_scene load_steps=8 format=3 uid="uid://b8llxfxyvwslx"]
 
-[ext_resource type="Texture2D" uid="uid://tclw7vc23fu1" path="res://Assets/Art/DevArt/PlayerShipForwardFireBoth.png" id="1_lxdjg"]
-[ext_resource type="Script" path="res://PlayerShip.cs" id="1_tv7ug"]
-[ext_resource type="PackedScene" uid="uid://2opfvth7f8cb" path="res://Cannonball.tscn" id="2_23aii"]
-[ext_resource type="Texture2D" uid="uid://cyfosj66v8gs7" path="res://Assets/Art/DevArt/PlayerShipForward.png" id="2_peoww"]
-[ext_resource type="Texture2D" uid="uid://4xauv1k0grit" path="res://Assets/Art/DevArt/PlayerShipForwardFireLeft.png" id="3_a4tcn"]
-[ext_resource type="Texture2D" uid="uid://d0o0c2ag8fxpo" path="res://Assets/Art/DevArt/PlayerShipForwardFireRight.png" id="4_tqk80"]
+[ext_resource type="Script" path="res://EnemyShip.cs" id="1_n5d15"]
+[ext_resource type="PackedScene" uid="uid://2opfvth7f8cb" path="res://Cannonball.tscn" id="2_bjkd2"]
+[ext_resource type="Texture2D" uid="uid://bwf3djqvrknxm" path="res://Assets/Art/DevArt/EnemyShipForwardFireBoth.png" id="2_giqad"]
+[ext_resource type="Texture2D" uid="uid://bqeb87cvd4v6k" path="res://Assets/Art/DevArt/EnemyShipForwardFireLeft.png" id="3_r5nhu"]
+[ext_resource type="Texture2D" uid="uid://btptp4gvfm05a" path="res://Assets/Art/DevArt/EnemyShipForwardFireRight.png" id="4_e2uvo"]
+[ext_resource type="Texture2D" uid="uid://cusc1xxfa7p5e" path="res://Assets/Art/DevArt/EnemyShipForward.png" id="5_y0u2v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qo6bu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_lxdjg")
+"texture": ExtResource("2_giqad")
 }],
 "loop": true,
 "name": &"fire_both",
@@ -19,7 +19,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_a4tcn")
+"texture": ExtResource("3_r5nhu")
 }],
 "loop": true,
 "name": &"fire_left",
@@ -27,7 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_tqk80")
+"texture": ExtResource("4_e2uvo")
 }],
 "loop": true,
 "name": &"fire_right",
@@ -35,21 +35,21 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_peoww")
+"texture": ExtResource("5_y0u2v")
 }],
 "loop": true,
 "name": &"forward",
 "speed": 5.0
 }]
 
-[node name="PlayerShip" type="Area2D"]
-position = Vector2(590, 484)
-script = ExtResource("1_tv7ug")
-CannonballScene = ExtResource("2_23aii")
-MaxSpeed = 200.0
+[node name="EnemyShip" type="Area2D"]
+position = Vector2(574, 491)
+script = ExtResource("1_n5d15")
+CannonballScene = ExtResource("2_bjkd2")
+MaxSpeed = 100.0
 metadata/_edit_group_ = true
 
-[node name="PlayerAnimSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="EnemyAnimSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qo6bu")
 animation = &"fire_both"
 
@@ -57,12 +57,30 @@ animation = &"fire_both"
 polygon = PackedVector2Array(0, 149, -21, 135, -49, 69, -47, -31, -1, -151, 46, -32, 48, 68, 20, 136)
 
 [node name="LeftCannonTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 
 [node name="RightCannonTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
+
+[node name="TopLeftCannonRay" type="RayCast2D" parent="."]
+position = Vector2(-11, -116)
+target_position = Vector2(-9999, 0)
+collide_with_areas = true
+
+[node name="TopRightCannonRay" type="RayCast2D" parent="."]
+position = Vector2(10, -117)
+target_position = Vector2(9999, 0)
+collide_with_areas = true
+
+[node name="BottomRightCannonRay" type="RayCast2D" parent="."]
+position = Vector2(16, 117)
+target_position = Vector2(9999, 0)
+collide_with_areas = true
+
+[node name="BottomLeftCannonRay" type="RayCast2D" parent="."]
+position = Vector2(-18, 116)
+target_position = Vector2(-9999, 0)
+collide_with_areas = true
 
 [node name="TopLeftCannonMarker" type="Marker2D" parent="."]
 position = Vector2(-47, -45)
@@ -98,3 +116,5 @@ one_shot = true
 
 [connection signal="timeout" from="LeftCannonTimer" to="." method="OnLeftCannonTimerTimeout"]
 [connection signal="timeout" from="RightCannonTimer" to="." method="OnRightCannonTimerTimeout"]
+[connection signal="timeout" from="LeftCannonAnimTimer" to="." method="OnLeftCannonAnimTimerTimeout"]
+[connection signal="timeout" from="RightCannonAnimTimer" to="." method="OnRightCannonAnimTimerTimeout"]

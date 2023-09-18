@@ -1,23 +1,13 @@
 using Godot;
 using System;
 
-public partial class PlayerShip : Area2D
+public partial class EnemyShip : Area2D
 {
-
     [Export]
     public PackedScene CannonballScene;
 
     [Export]
     public float MaxSpeed { get; set; } = 400f;
-
-    [Export]
-    public float MaxRotationSpeed { get; set; } = .5f;
-
-    [Export]
-    public float Deceleration { get; set; } = 5f;
-
-    [Export]
-    public float Accelleration = 5;
 
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
@@ -40,9 +30,14 @@ public partial class PlayerShip : Area2D
     private Marker2D centerLowerRightCannonMarker;
     private Marker2D bottomRightCannonMarker;
 
+    private RayCast2D topLeftCannonRay;
+    private RayCast2D bottomLeftCannonRay;
+    private RayCast2D topRightCannonRay;
+    private RayCast2D bottomRightCannonRay;
+
     public override void _Ready()
     {
-        animatedSprite = GetNode<AnimatedSprite2D>("PlayerAnimSprite2D");
+        animatedSprite = GetNode<AnimatedSprite2D>("EnemyAnimSprite2D");
         leftCannonTimer = GetNode<Timer>("LeftCannonTimer");
         rightCannonTimer = GetNode<Timer>("RightCannonTimer");
         leftCannonAnimTimer = GetNode<Timer>("LeftCannonAnimTimer");
@@ -57,62 +52,21 @@ public partial class PlayerShip : Area2D
         centerUpperRightCannonMarker = GetNode<Marker2D>("CenterUpperRightCannonMarker");
         centerLowerRightCannonMarker = GetNode<Marker2D>("CenterLowerRightCannonMarker");
         bottomRightCannonMarker = GetNode<Marker2D>("BottomRightCannonMarker");
+
+        topLeftCannonRay = GetNode<RayCast2D>("TopLeftCannonRay");
+        bottomLeftCannonRay = GetNode<RayCast2D>("BottomLeftCannonRay");
+        topRightCannonRay = GetNode<RayCast2D>("TopRightCannonRay");
+        bottomRightCannonRay = GetNode<RayCast2D>("BottomRightCannonRay");
     }
 
     public override void _Process(double delta)
     {
-        SetPlayerAnim();
-
-        if (!firedLeft && Input.IsActionJustReleased("fire_left"))
-        {
-            FireCannons("left");
-        }
-
-        if (!firedRight && Input.IsActionJustReleased("fire_right"))
-        {
-            FireCannons("right");
-        }
-
-        if (Input.IsActionPressed("move_forward") && curSpeed < MaxSpeed)
-        {
-            curSpeed += Accelleration * (float)delta;
-        }
-
-        if (Input.IsActionPressed("slow_down"))
-        {
-            curSpeed -= Deceleration * (float)delta;
-            if (curSpeed < 0)
-            {
-                curSpeed = 0;
-            }
-        }
-
-        if (curSpeed > MaxSpeed)
-        {
-            curSpeed = MaxSpeed;
-        }
-
-        float currentRotationSpeed = CalculateRotationSpeed();
-
-        // Only allow rotation if the ship is moving
-        if (curSpeed > 0)
-        {
-            if (Input.IsActionPressed("turn_left"))
-            {
-                Rotation -= currentRotationSpeed * (float)delta;
-            }
-
-            if (Input.IsActionPressed("turn_right"))
-            {
-                Rotation += currentRotationSpeed * (float)delta;
-            }
-        }
-
-        var forwardDirection = new Vector2(Mathf.Cos(Rotation - Mathf.Pi / 2), Mathf.Sin(Rotation - Mathf.Pi / 2));
-        Position += forwardDirection * curSpeed * (float)delta;
+        SetEnemyAnim();
+        MoveForward(delta);
+        CheckForPlayerInRange();
     }
 
-    private void SetPlayerAnim()
+    private void SetEnemyAnim()
     {
         if (firedLeft && firedRight && leftCannonAnimTimerRunning && rightCannonAnimTimerRunning)
         {
@@ -132,18 +86,39 @@ public partial class PlayerShip : Area2D
         }
     }
 
+    private void MoveForward(double delta)
+    {
+        if (curSpeed < MaxSpeed)
+        {
+            curSpeed = MaxSpeed;  // Enemy ships will always move at max speed for simplicity
+        }
+
+        var forwardDirection = new Vector2(Mathf.Cos(Rotation - Mathf.Pi / 2), Mathf.Sin(Rotation - Mathf.Pi / 2));
+        Position += forwardDirection * curSpeed * (float)delta;
+    }
+
+    private void CheckForPlayerInRange()
+    {
+        if (topLeftCannonRay.IsColliding() && topLeftCannonRay.GetCollider() is PlayerShip || bottomLeftCannonRay.IsColliding() && bottomLeftCannonRay.GetCollider() is PlayerShip)
+        {
+            FireCannons("left");
+        }
+        if (topRightCannonRay.IsColliding() && topRightCannonRay.GetCollider() is PlayerShip || bottomRightCannonRay.IsColliding() && bottomRightCannonRay.GetCollider() is PlayerShip)
+        {
+            FireCannons("right");
+        }
+    }
+
     private void FireCannons(string direction)
     {
-
         float shipRotation = Rotation;
 
-        if (direction == "left")
+        if (direction == "left" && !firedLeft)
         {
             firedLeft = true;
             leftCannonTimer.Start();
             leftCannonAnimTimer.Start();
             leftCannonAnimTimerRunning = true;
-
             float fireAngle = shipRotation + Mathf.Pi;
 
             SpawnCannonball(topLeftCannonMarker.GlobalPosition, fireAngle);
@@ -151,7 +126,7 @@ public partial class PlayerShip : Area2D
             SpawnCannonball(centerLowerLeftCannonMarker.GlobalPosition, fireAngle);
             SpawnCannonball(bottomLeftCannonMarker.GlobalPosition, fireAngle);
         }
-        else if (direction == "right")
+        else if (direction == "right" && !firedRight)
         {
             firedRight = true;
             rightCannonTimer.Start();
@@ -176,23 +151,29 @@ public partial class PlayerShip : Area2D
         firedRight = false;
     }
 
-    private float CalculateRotationSpeed()
+    private void OnRightCannonAnimTimerTimeout()
     {
-        // Derived from a downward facing parabola based on curSpeed
-        float factor = -4 * (curSpeed / MaxSpeed - 0.5f) * (curSpeed / MaxSpeed - 0.5f) + 1;
-        // Clamp the lower value to 1/10th of MaxRotationSpeed
-        var curRotationSpeed = Mathf.Clamp(MaxRotationSpeed * factor, MaxRotationSpeed / 10, MaxRotationSpeed);
-        //GD.Print(curSpeed, curRotationSpeed);
-        return curRotationSpeed;
+        rightCannonAnimTimerRunning = false;
+    }
 
+    private void OnLeftCannonAnimTimerTimeout()
+    {
+        leftCannonAnimTimerRunning = false;
     }
 
     private void SpawnCannonball(Vector2 spawnPosition, float angle)
     {
-        Cannonball cannonballInstance = CannonballScene.Instantiate<Cannonball>();
-        GetParent().AddChild(cannonballInstance);
-
+        Cannonball cannonballInstance = (Cannonball)CannonballScene.Instantiate<Cannonball>();
         cannonballInstance.Position = spawnPosition;
         cannonballInstance.Rotation = angle;
+        GetTree().CurrentScene.AddChild(cannonballInstance);
+    }
+
+    public void OnCannonballHit()
+    {
+        //animatedSprite.Animation = "sink";
+        // You'll likely want to add some delay after the sinking animation before actually deleting the enemy ship.
+        // This can be done with a Timer.
+        QueueFree();
     }
 }
