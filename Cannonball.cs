@@ -1,13 +1,14 @@
 using Godot;
 using System;
+using System.Security;
 
 public partial class Cannonball : Area2D
 {
     [Export]
     public float Speed { get; set; } = 400f;  // You can adjust the speed value in the inspector
 
-    [Signal]
-    public delegate void OnCannonballHitEventHandler();
+    [Export]
+    public string Faction { get; set; } = "Player";
 
     private AnimatedSprite2D animatedSprite;
     private Timer cannonballSplashTimer;
@@ -57,5 +58,26 @@ public partial class Cannonball : Area2D
     {
         // Delete the cannonball
         QueueFree();
+    }
+
+    public void OnCannonballCollide(Area2D area)
+    {
+        if(area is PlayerShip pShip)
+        {
+            if(pShip.Faction != Faction)
+            {
+                pShip.HandleCannonballHit();
+                QueueFree();
+            }
+        }
+
+        if(area is EnemyShip eShip)
+        {
+            if(eShip.Faction != Faction)
+            {
+                //eShip.HandleCannonBallHit();
+                QueueFree();
+            }
+        }
     }
 }

@@ -9,6 +9,9 @@ public partial class EnemyShip : Area2D
     [Export]
     public float MaxSpeed { get; set; } = 400f;
 
+    [Export]
+    public string Faction { get; set; } = "Enemy";
+
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
     private bool firedLeft = false;
@@ -164,6 +167,7 @@ public partial class EnemyShip : Area2D
     private void SpawnCannonball(Vector2 spawnPosition, float angle)
     {
         Cannonball cannonballInstance = (Cannonball)CannonballScene.Instantiate<Cannonball>();
+        cannonballInstance.Faction = Faction;
         cannonballInstance.Position = spawnPosition;
         cannonballInstance.Rotation = angle;
         GetTree().CurrentScene.AddChild(cannonballInstance);

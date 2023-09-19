@@ -66,5 +66,6 @@ one_shot = true
 [node name="CannonballDeleteTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="area_entered" from="." to="." method="OnCannonballCollide"]
 [connection signal="timeout" from="CannonballSplashTimer" to="." method="OnCannonballSplashTimerTimeout"]
 [connection signal="timeout" from="CannonballDeleteTimer" to="." method="OnCannonballDeleteTimerTimeout"]

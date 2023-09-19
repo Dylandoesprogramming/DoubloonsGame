@@ -19,6 +19,13 @@ public partial class PlayerShip : Area2D
     [Export]
     public float Accelleration = 5;
 
+    [Export]
+    public int MaxHealth = 100;
+
+    [Export]
+    public string Faction { get; set; } = "Player";
+
+    private int curHealth = 100;
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
     private bool firedLeft = false;
@@ -112,6 +119,12 @@ public partial class PlayerShip : Area2D
         Position += forwardDirection * curSpeed * (float)delta;
     }
 
+    public void HandleCannonballHit()
+    {
+        curHealth -= 5;
+        GD.Print("Health: " + curHealth.ToString());
+    }
+
     private void SetPlayerAnim()
     {
         if (firedLeft && firedRight && leftCannonAnimTimerRunning && rightCannonAnimTimerRunning)
@@ -192,6 +205,7 @@ public partial class PlayerShip : Area2D
         Cannonball cannonballInstance = CannonballScene.Instantiate<Cannonball>();
         GetParent().AddChild(cannonballInstance);
 
+        cannonballInstance.Faction = Faction;
         cannonballInstance.Position = spawnPosition;
         cannonballInstance.Rotation = angle;
     }
