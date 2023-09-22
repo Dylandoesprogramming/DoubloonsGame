@@ -31,23 +31,8 @@ public partial class Cannonball : Area2D
         Position += forwardDirection * Speed * (float)delta;
     }
 
-    public void OnCannonballAreaEntered(Area2D area)
-    {
-        // Check if the cannonball hit an enemy ship or player ship
-        if (area is EnemyShip || area is PlayerShip)
-        {
-
-            // Signal the ship that it was hit
-            area.EmitSignal("HitByCannonball");
-
-            // Delete
-            QueueFree();
-        }
-    }
-
     public void OnCannonballSplashTimerTimeout()
     {
-        // This function is called when the CannonballSplashTimer times out
         // Play the miss animation for a miss
         animatedSprite.Play("miss");
         // Start the delete timer to remove the cannonball after playing the sink animation
@@ -56,7 +41,6 @@ public partial class Cannonball : Area2D
 
     public void OnCannonballDeleteTimerTimeout()
     {
-        // Delete the cannonball
         QueueFree();
     }
 

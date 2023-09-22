@@ -4,13 +4,13 @@ using System;
 public partial class EnemySpawner : Node2D
 {
     [Export]
-    private PackedScene enemyShipScene; // Drag your EnemyShip scene here in the inspector.
+    private PackedScene enemyShipScene;
 
     [Export]
-    private float margin = 0; // Margin outside of the viewport for spawning.
+    private float margin = 0;
 
     [Export]
-    private float MinSpawnTime = 15.0f; // Default value, can be set in the inspector.
+    private float MinSpawnTime = 15.0f;
 
     [Export]
     private float MaxSpawnTime = 30.0f;
@@ -76,7 +76,7 @@ public partial class EnemySpawner : Node2D
         {
             targetPosition = new Vector2((float)random.NextDouble() * GetViewportRect().Size.X, GetViewportRect().Size.Y + margin);
         }
-        else // randomY >= GetViewportRect().Size.Y
+        else
         {
             targetPosition = new Vector2((float)random.NextDouble() * GetViewportRect().Size.X, -margin);
         }
@@ -84,7 +84,7 @@ public partial class EnemySpawner : Node2D
         // Calculate direction to the target position.
         var directionToTarget = targetPosition - enemy.Position;
 
-        // Adjust for your sprite's orientation.
+        // Adjust for sprite's orientation.
         var angle = Mathf.Atan2(directionToTarget.Y, directionToTarget.X) + Mathf.Pi / 2; // Add 90 degrees (in radians)
         enemy.Rotation = angle;
     }
