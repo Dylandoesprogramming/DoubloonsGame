@@ -12,6 +12,11 @@ public partial class EnemyShip : Area2D
     [Export]
     public string Faction { get; set; } = "Enemy";
 
+    [Export]
+    public int MaxHealth { get; set; } = 30;
+
+    private Random random = new Random();
+    private int curHealth = 30;
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
     private bool firedLeft = false;
@@ -38,8 +43,15 @@ public partial class EnemyShip : Area2D
     private RayCast2D topRightCannonRay;
     private RayCast2D bottomRightCannonRay;
 
+    private ProgressBar healthBar;
+
     public override void _Ready()
     {
+        MaxSpeed = (int)random.NextInt64(10, 50);
+        curHealth = MaxHealth;
+        healthBar = GetNode<ProgressBar>("HealthBar");
+        healthBar.MaxValue = MaxHealth;
+        healthBar.Value = curHealth;
         animatedSprite = GetNode<AnimatedSprite2D>("EnemyAnimSprite2D");
         leftCannonTimer = GetNode<Timer>("LeftCannonTimer");
         rightCannonTimer = GetNode<Timer>("RightCannonTimer");
@@ -64,6 +76,7 @@ public partial class EnemyShip : Area2D
 
     public override void _Process(double delta)
     {
+        healthBar.Value = curHealth;
         SetEnemyAnim();
         MoveForward(delta);
         CheckForPlayerInRange();
@@ -172,12 +185,12 @@ public partial class EnemyShip : Area2D
         cannonballInstance.Rotation = angle;
         GetTree().CurrentScene.AddChild(cannonballInstance);
     }
-
-    public void OnCannonballHit()
+    public void HandleCannonballHit()
     {
-        //animatedSprite.Animation = "sink";
-        // You'll likely want to add some delay after the sinking animation before actually deleting the enemy ship.
-        // This can be done with a Timer.
-        QueueFree();
+        curHealth -= 10;
+        if(curHealth <= 0)
+        {
+            QueueFree();
+        }
     }
 }

@@ -44,9 +44,13 @@ animations = [{
 
 [node name="PlayerShip" type="Area2D"]
 position = Vector2(590, 484)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_tv7ug")
 CannonballScene = ExtResource("2_23aii")
-MaxSpeed = 200.0
+MaxSpeed = 100.0
+MaxRotationSpeed = 1.25
+Deceleration = 10.0
+MaxHealth = 500
 metadata/_edit_group_ = true
 
 [node name="PlayerAnimSprite2D" type="AnimatedSprite2D" parent="."]
@@ -96,5 +100,20 @@ one_shot = true
 wait_time = 0.3
 one_shot = true
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(0, 0.945098, 0.470588, 1)
+offset_left = -30.0
+offset_top = -36.0
+offset_right = 30.0
+offset_bottom = -24.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 500.0
+value = 1.0
+fill_mode = 1
+show_percentage = false
+
+[connection signal="area_entered" from="." to="." method="OnPlayerCollide"]
 [connection signal="timeout" from="LeftCannonTimer" to="." method="OnLeftCannonTimerTimeout"]
 [connection signal="timeout" from="RightCannonTimer" to="." method="OnRightCannonTimerTimeout"]

@@ -15,6 +15,12 @@ run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://Assets/Art/DevArt/Icon.png"
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="PirateGame"
@@ -68,3 +74,4 @@ fire_right={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.301961, 0.729412, 1, 1)

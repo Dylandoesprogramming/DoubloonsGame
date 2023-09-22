@@ -75,7 +75,7 @@ public partial class Cannonball : Area2D
         {
             if(eShip.Faction != Faction)
             {
-                //eShip.HandleCannonBallHit();
+                eShip.HandleCannonballHit();
                 QueueFree();
             }
         }

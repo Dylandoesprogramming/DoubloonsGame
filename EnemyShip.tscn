@@ -44,6 +44,7 @@ animations = [{
 
 [node name="EnemyShip" type="Area2D"]
 position = Vector2(574, 491)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_n5d15")
 CannonballScene = ExtResource("2_bjkd2")
 MaxSpeed = 100.0
@@ -113,6 +114,20 @@ one_shot = true
 [node name="RightCannonAnimTimer" type="Timer" parent="."]
 wait_time = 0.3
 one_shot = true
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+offset_left = -30.0
+offset_top = -36.0
+offset_right = 30.0
+offset_bottom = -24.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 500.0
+value = 1.0
+fill_mode = 1
+show_percentage = false
 
 [connection signal="timeout" from="LeftCannonTimer" to="." method="OnLeftCannonTimerTimeout"]
 [connection signal="timeout" from="RightCannonTimer" to="." method="OnRightCannonTimerTimeout"]

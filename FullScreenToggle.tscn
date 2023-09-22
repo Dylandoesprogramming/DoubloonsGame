@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://b53epopwcwy1b"]
+
+[ext_resource type="Script" path="res://FullScreenToggle.cs" id="1_bb24g"]
+
+[node name="FullScreenToggle" type="Node2D"]
+script = ExtResource("1_bb24g")
+
+[node name="FullScreenToggleButton" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Toggle Fullscreen"
+
+[connection signal="pressed" from="FullScreenToggleButton" to="." method="OnFullScreenToggleButtonPressed"]

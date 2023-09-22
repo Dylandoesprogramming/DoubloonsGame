@@ -47,8 +47,14 @@ public partial class PlayerShip : Area2D
     private Marker2D centerLowerRightCannonMarker;
     private Marker2D bottomRightCannonMarker;
 
+    private ProgressBar healthBar;
+
     public override void _Ready()
     {
+        curHealth = MaxHealth;
+        healthBar = GetNode<ProgressBar>("HealthBar");
+        healthBar.MaxValue = MaxHealth;
+        healthBar.Value = curHealth;
         animatedSprite = GetNode<AnimatedSprite2D>("PlayerAnimSprite2D");
         leftCannonTimer = GetNode<Timer>("LeftCannonTimer");
         rightCannonTimer = GetNode<Timer>("RightCannonTimer");
@@ -69,6 +75,7 @@ public partial class PlayerShip : Area2D
     public override void _Process(double delta)
     {
         SetPlayerAnim();
+        healthBar.Value = curHealth;
 
         if (!firedLeft && Input.IsActionJustReleased("fire_left"))
         {
@@ -208,5 +215,14 @@ public partial class PlayerShip : Area2D
         cannonballInstance.Faction = Faction;
         cannonballInstance.Position = spawnPosition;
         cannonballInstance.Rotation = angle;
+    }
+
+    private void OnPlayerCollide(Area2D area)
+    {
+        if(area is EnemyShip eShip)
+        {
+            eShip.QueueFree(); //placeholder for kill it
+            curHealth -= 50;
+        }
     }
 }

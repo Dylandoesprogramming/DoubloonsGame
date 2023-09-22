@@ -39,7 +39,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"miss",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a4w77"]
@@ -47,23 +47,24 @@ radius = 25.02
 
 [node name="Cannonball" type="Area2D"]
 position = Vector2(29, 301)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.125, 0.125)
 script = ExtResource("1_0fy72")
 Speed = 500.0
 metadata/_edit_group_ = true
 
 [node name="CannonballAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3wc36")
-animation = &"fire"
+animation = &"miss"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_a4w77")
 
 [node name="CannonballSplashTimer" type="Timer" parent="."]
-wait_time = 1.5
+wait_time = 0.5
 one_shot = true
 
 [node name="CannonballDeleteTimer" type="Timer" parent="."]
+wait_time = 0.75
 one_shot = true
 
 [connection signal="area_entered" from="." to="." method="OnCannonballCollide"]

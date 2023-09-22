@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2b16wixwt0x"]
+
+[ext_resource type="Script" path="res://EnemySpawner.cs" id="1_vi14j"]
+[ext_resource type="PackedScene" uid="uid://b8llxfxyvwslx" path="res://EnemyShip.tscn" id="2_13nun"]
+
+[node name="EnemySpawner" type="Node2D"]
+script = ExtResource("1_vi14j")
+enemyShipScene = ExtResource("2_13nun")
+margin = 100.0
+MinSpawnTime = 5.0
+MaxSpawnTime = 15.0
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 15.0
+
+[connection signal="timeout" from="SpawnTimer" to="." method="OnSpawnTimerTimeout"]
