@@ -36,6 +36,9 @@ public partial class EnemySpawner : Node2D
     {
         var enemy = enemyShipScene.Instantiate<EnemyShip>();
         AddChild(enemy);
+        //Get Main nodes OnEnemyDeath func for connecting to new enemy ship spawned
+        var onDeathCallable = new Callable(GetParent(), "OnEnemyDeath");
+        enemy.Connect("EnemySank", onDeathCallable);
 
         // Random position along the viewport edge, considering the margin.
         var randomX = (float)random.NextDouble() * GetViewportRect().Size.X;

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnmdkab0va03f"]
+
+[ext_resource type="PackedScene" uid="uid://0axwjmmjv84n" path="res://Menu.tscn" id="1_2ehg4"]
+[ext_resource type="Script" path="res://Game.cs" id="1_puljw"]
+[ext_resource type="PackedScene" uid="uid://yco6txv2hf8i" path="res://Main.tscn" id="2_8d06s"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_puljw")
+MainPackedScene = ExtResource("2_8d06s")
+MenuPackedScene = ExtResource("1_2ehg4")
+
+[node name="Menu" parent="." instance=ExtResource("1_2ehg4")]
+
+[connection signal="PressPlay" from="Menu" to="." method="OnPlayPressed"]
+[connection signal="PressQuit" from="Menu" to="." method="OnQuitPressed"]

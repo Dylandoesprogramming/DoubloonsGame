@@ -25,6 +25,9 @@ public partial class PlayerShip : Area2D
     [Export]
     public string Faction { get; set; } = "Player";
 
+    [Signal]
+    public delegate void PlayerSankEventHandler();
+
     private int curHealth = 100;
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
@@ -129,6 +132,11 @@ public partial class PlayerShip : Area2D
     public void HandleCannonballHit()
     {
         curHealth -= 5;
+        if (curHealth <= 0)
+        {
+            EmitSignal(SignalName.PlayerSank);
+            QueueFree();
+        }
         GD.Print("Health: " + curHealth.ToString());
     }
 

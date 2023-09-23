@@ -7,13 +7,19 @@ public partial class EnemyShip : Area2D
     public PackedScene CannonballScene;
 
     [Export]
-    public float MaxSpeed { get; set; } = 400f;
+    public int MaxSpeed { get; set; } = 50;
+
+    [Export]
+    public int MinSpeed { get; set; } = 20;
 
     [Export]
     public string Faction { get; set; } = "Enemy";
 
     [Export]
     public int MaxHealth { get; set; } = 30;
+
+    [Signal]
+    public delegate void EnemySankEventHandler();
 
     private Random random = new Random();
     private int curHealth = 30;
@@ -47,7 +53,7 @@ public partial class EnemyShip : Area2D
 
     public override void _Ready()
     {
-        MaxSpeed = (int)random.NextInt64(10, 50);
+        MaxSpeed = (int)random.NextInt64(MinSpeed, MaxSpeed);
         curHealth = MaxHealth;
         healthBar = GetNode<ProgressBar>("HealthBar");
         healthBar.MaxValue = MaxHealth;
@@ -190,6 +196,7 @@ public partial class EnemyShip : Area2D
         curHealth -= 10;
         if(curHealth <= 0)
         {
+            EmitSignal(SignalName.EnemySank);
             QueueFree();
         }
     }
