@@ -15,10 +15,14 @@ public partial class Main : Node
 	public override void _Ready()
 	{
 		scoreKeeper = GetNode<ScoreKeeper>("ScoreKeeper");
-	}
+    }
 
 	public override void _Process(double delta)
 	{
+		if (Input.IsActionJustReleased("quit"))
+		{
+			OnPlayerDeath();
+		}
 	}
 
 	public void OnEnemyDeath()
@@ -29,7 +33,13 @@ public partial class Main : Node
 	public void OnPlayerDeath()
 	{
 		DeathScore = scoreKeeper.ReturnScore();
-		GD.Print("Death Score: " + DeathScore);
 		EmitSignal("GotoMenu");
 	}
+
+	public void OnPlayerLeave()
+	{
+		//Kill player if they leave the screen entirely
+		OnPlayerDeath();
+	}
+
 }

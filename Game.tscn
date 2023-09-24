@@ -8,6 +8,7 @@
 script = ExtResource("1_puljw")
 MainPackedScene = ExtResource("2_8d06s")
 MenuPackedScene = ExtResource("1_2ehg4")
+metadata/_edit_group_ = true
 
 [node name="Menu" parent="." instance=ExtResource("1_2ehg4")]
 

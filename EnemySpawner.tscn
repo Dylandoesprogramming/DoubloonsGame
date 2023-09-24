@@ -9,6 +9,7 @@ enemyShipScene = ExtResource("2_13nun")
 margin = 100.0
 MinSpawnTime = 5.0
 MaxSpawnTime = 15.0
+metadata/_edit_group_ = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 15.0

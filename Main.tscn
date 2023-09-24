@@ -12,7 +12,6 @@ script = ExtResource("1_ifsit")
 
 [node name="PlayerShip" parent="." instance=ExtResource("1_y8t6h")]
 position = Vector2(956, 546)
-MaxHealth = 1
 
 [node name="Icon" type="Sprite2D" parent="."]
 z_index = -1
@@ -28,4 +27,5 @@ scale = Vector2(2, 2)
 position = Vector2(1919, -1)
 scale = Vector2(2.5, 2.5)
 
+[connection signal="PlayerLeftScreen" from="PlayerShip" to="." method="OnPlayerLeave"]
 [connection signal="PlayerSank" from="PlayerShip" to="." method="OnPlayerDeath"]

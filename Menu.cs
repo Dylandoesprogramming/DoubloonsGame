@@ -21,13 +21,11 @@ public partial class Menu : Control
 
 	public void OnStartButtonPressed()
 	{
-		GD.Print("Emit PressPlay");
 		EmitSignal("PressPlay");
 	}
 
 	public void OnQuitButtonPressed()
 	{
-		GD.Print("Emit PressQuit");
 		EmitSignal("PressQuit");
 	}
 

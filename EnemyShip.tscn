@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" path="res://EnemyShip.cs" id="1_n5d15"]
 [ext_resource type="PackedScene" uid="uid://2opfvth7f8cb" path="res://Cannonball.tscn" id="2_bjkd2"]
-[ext_resource type="Texture2D" uid="uid://bwf3djqvrknxm" path="res://Assets/Art/DevArt/EnemyShipForwardFireBoth.png" id="2_giqad"]
-[ext_resource type="Texture2D" uid="uid://bqeb87cvd4v6k" path="res://Assets/Art/DevArt/EnemyShipForwardFireLeft.png" id="3_r5nhu"]
-[ext_resource type="Texture2D" uid="uid://btptp4gvfm05a" path="res://Assets/Art/DevArt/EnemyShipForwardFireRight.png" id="4_e2uvo"]
-[ext_resource type="Texture2D" uid="uid://cusc1xxfa7p5e" path="res://Assets/Art/DevArt/EnemyShipForward.png" id="5_y0u2v"]
+[ext_resource type="Texture2D" uid="uid://br0x16punr4mv" path="res://Assets/Art/EnemyShip/EnemyShipFireBoth.png" id="3_mf462"]
+[ext_resource type="Texture2D" uid="uid://duf8veohxjcj8" path="res://Assets/Art/EnemyShip/EnemyShipFireLeft.png" id="4_cesxt"]
+[ext_resource type="Texture2D" uid="uid://cdmsb1qvhm4hg" path="res://Assets/Art/EnemyShip/EnemyShipFireRight.png" id="5_mtyui"]
+[ext_resource type="Texture2D" uid="uid://cdh7hf4g3c7rg" path="res://Assets/Art/EnemyShip/EnemyShipForward.png" id="6_0oyxu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qo6bu"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_giqad")
+"texture": ExtResource("3_mf462")
 }],
 "loop": true,
 "name": &"fire_both",
@@ -19,7 +19,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_r5nhu")
+"texture": ExtResource("4_cesxt")
 }],
 "loop": true,
 "name": &"fire_left",
@@ -27,7 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_e2uvo")
+"texture": ExtResource("5_mtyui")
 }],
 "loop": true,
 "name": &"fire_right",
@@ -35,7 +35,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_y0u2v")
+"texture": ExtResource("6_0oyxu")
 }],
 "loop": true,
 "name": &"forward",
@@ -54,7 +54,7 @@ sprite_frames = SubResource("SpriteFrames_qo6bu")
 animation = &"fire_both"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(0, 149, -21, 135, -49, 69, -47, -31, -1, -151, 46, -32, 48, 68, 20, 136)
+polygon = PackedVector2Array(-6, 336, -46, 328, -104, 122, -102, -148, -2, -316, 104, -142, 112, 102, 38, 332)
 
 [node name="LeftCannonTimer" type="Timer" parent="."]
 one_shot = true
@@ -63,48 +63,48 @@ one_shot = true
 one_shot = true
 
 [node name="TopLeftCannonRay" type="RayCast2D" parent="."]
-position = Vector2(-11, -116)
+position = Vector2(-110, -146)
 target_position = Vector2(-9999, 0)
 collide_with_areas = true
 
 [node name="TopRightCannonRay" type="RayCast2D" parent="."]
-position = Vector2(10, -117)
+position = Vector2(100, -148)
 target_position = Vector2(9999, 0)
 collide_with_areas = true
 
 [node name="BottomRightCannonRay" type="RayCast2D" parent="."]
-position = Vector2(16, 117)
+position = Vector2(106, 128)
 target_position = Vector2(9999, 0)
 collide_with_areas = true
 
 [node name="BottomLeftCannonRay" type="RayCast2D" parent="."]
-position = Vector2(-18, 116)
+position = Vector2(-110, 128)
 target_position = Vector2(-9999, 0)
 collide_with_areas = true
 
 [node name="TopLeftCannonMarker" type="Marker2D" parent="."]
-position = Vector2(-47, -45)
+position = Vector2(-112, -146)
 
 [node name="CenterUpperLeftCannonMarker" type="Marker2D" parent="."]
-position = Vector2(-52, -1)
+position = Vector2(-110, -72)
 
 [node name="CenterLowerLeftCannonMarker" type="Marker2D" parent="."]
-position = Vector2(-53, 46)
+position = Vector2(-118, 64)
 
 [node name="BottomLeftCannonMarker" type="Marker2D" parent="."]
-position = Vector2(-36, 110)
+position = Vector2(-114, 130)
 
 [node name="TopRightCannonMarker" type="Marker2D" parent="."]
-position = Vector2(47, -45)
+position = Vector2(98, -148)
 
 [node name="CenterUpperRightCannonMarker" type="Marker2D" parent="."]
-position = Vector2(54, -2)
+position = Vector2(102, -72)
 
 [node name="CenterLowerRightCannonMarker" type="Marker2D" parent="."]
-position = Vector2(53, 45)
+position = Vector2(108, 62)
 
 [node name="BottomRightCannonMarker" type="Marker2D" parent="."]
-position = Vector2(35, 111)
+position = Vector2(106, 128)
 
 [node name="LeftCannonAnimTimer" type="Timer" parent="."]
 wait_time = 0.3
@@ -116,10 +116,10 @@ one_shot = true
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 self_modulate = Color(1, 0, 0, 1)
-offset_left = -30.0
-offset_top = -36.0
-offset_right = 30.0
-offset_bottom = -24.0
+offset_left = -32.0
+offset_top = -144.0
+offset_right = 28.0
+offset_bottom = -132.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 min_value = 1.0

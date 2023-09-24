@@ -13,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mi868")
+metadata/_edit_group_ = true
 
 [node name="MenuBackground" type="Sprite2D" parent="."]
 position = Vector2(960, 543)

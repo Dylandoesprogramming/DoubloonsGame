@@ -28,6 +28,9 @@ public partial class PlayerShip : Area2D
     [Signal]
     public delegate void PlayerSankEventHandler();
 
+    [Signal]
+    public delegate void PlayerLeftScreenEventHandler();
+
     private int curHealth = 100;
     private float curSpeed = 0f;
     private AnimatedSprite2D animatedSprite;
@@ -131,13 +134,12 @@ public partial class PlayerShip : Area2D
 
     public void HandleCannonballHit()
     {
-        curHealth -= 5;
+        curHealth -= 10;
         if (curHealth <= 0)
         {
             EmitSignal(SignalName.PlayerSank);
             QueueFree();
         }
-        GD.Print("Health: " + curHealth.ToString());
     }
 
     private void SetPlayerAnim()
@@ -232,5 +234,10 @@ public partial class PlayerShip : Area2D
             eShip.QueueFree(); //placeholder for kill it
             curHealth -= 50;
         }
+    }
+
+    private void PlayerLeft()
+    {
+        EmitSignal("PlayerLeftScreen");
     }
 }

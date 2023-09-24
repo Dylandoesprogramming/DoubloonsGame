@@ -114,6 +114,11 @@ value = 1.0
 fill_mode = 1
 show_percentage = false
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(3.05176e-05, -0.999969)
+scale = Vector2(5, 15.1)
+
 [connection signal="area_entered" from="." to="." method="OnPlayerCollide"]
 [connection signal="timeout" from="LeftCannonTimer" to="." method="OnLeftCannonTimerTimeout"]
 [connection signal="timeout" from="RightCannonTimer" to="." method="OnRightCannonTimerTimeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="PlayerLeft"]

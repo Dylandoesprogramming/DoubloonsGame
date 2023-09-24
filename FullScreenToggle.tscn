@@ -4,6 +4,7 @@
 
 [node name="FullScreenToggle" type="Node2D"]
 script = ExtResource("1_bb24g")
+metadata/_edit_group_ = true
 
 [node name="FullScreenToggleButton" type="Button" parent="."]
 offset_right = 8.0
