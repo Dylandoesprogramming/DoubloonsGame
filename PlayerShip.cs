@@ -55,12 +55,17 @@ public partial class PlayerShip : Area2D
 
     private ProgressBar healthBar;
 
+    private AudioStreamPlayer2D cannonAudioStreamPlayer;
+    private AudioStreamPlayer2D damageAudioStreamPlayer;
+
     public override void _Ready()
     {
         curHealth = MaxHealth;
         healthBar = GetNode<ProgressBar>("HealthBar");
         healthBar.MaxValue = MaxHealth;
         healthBar.Value = curHealth;
+        cannonAudioStreamPlayer = GetNode<AudioStreamPlayer2D>("CannonAudioStreamPlayer2D");
+        damageAudioStreamPlayer = GetNode<AudioStreamPlayer2D>("DamageAudioStreamPlayer2D");
         animatedSprite = GetNode<AnimatedSprite2D>("PlayerAnimSprite2D");
         leftCannonTimer = GetNode<Timer>("LeftCannonTimer");
         rightCannonTimer = GetNode<Timer>("RightCannonTimer");
@@ -134,6 +139,7 @@ public partial class PlayerShip : Area2D
 
     public void HandleCannonballHit()
     {
+        damageAudioStreamPlayer.Play();
         curHealth -= 10;
         if (curHealth <= 0)
         {
@@ -164,7 +170,7 @@ public partial class PlayerShip : Area2D
 
     private void FireCannons(string direction)
     {
-
+        cannonAudioStreamPlayer.Play();
         float shipRotation = Rotation;
 
         if (direction == "left")

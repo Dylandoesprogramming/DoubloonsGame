@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bg0ggxpjtfkvg"]
+[gd_scene load_steps=10 format=3 uid="uid://bg0ggxpjtfkvg"]
 
 [ext_resource type="Texture2D" uid="uid://tclw7vc23fu1" path="res://Assets/Art/DevArt/PlayerShipForwardFireBoth.png" id="1_lxdjg"]
 [ext_resource type="Script" path="res://PlayerShip.cs" id="1_tv7ug"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cyfosj66v8gs7" path="res://Assets/Art/DevArt/PlayerShipForward.png" id="2_peoww"]
 [ext_resource type="Texture2D" uid="uid://4xauv1k0grit" path="res://Assets/Art/DevArt/PlayerShipForwardFireLeft.png" id="3_a4tcn"]
 [ext_resource type="Texture2D" uid="uid://d0o0c2ag8fxpo" path="res://Assets/Art/DevArt/PlayerShipForwardFireRight.png" id="4_tqk80"]
+[ext_resource type="AudioStream" uid="uid://clbkrc4xwdvsc" path="res://Assets/Sound/retro_cannon_shot.wav" id="7_3oy30"]
+[ext_resource type="AudioStream" uid="uid://d4j3ymyuyw8hl" path="res://Assets/Sound/retro_damage.wav" id="8_qequa"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qo6bu"]
 animations = [{
@@ -117,6 +119,14 @@ show_percentage = false
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(3.05176e-05, -0.999969)
 scale = Vector2(5, 15.1)
+
+[node name="CannonAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_3oy30")
+volume_db = -20.0
+
+[node name="DamageAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_qequa")
+volume_db = -20.0
 
 [connection signal="area_entered" from="." to="." method="OnPlayerCollide"]
 [connection signal="timeout" from="LeftCannonTimer" to="." method="OnLeftCannonTimerTimeout"]

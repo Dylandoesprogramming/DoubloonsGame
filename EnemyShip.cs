@@ -51,6 +51,9 @@ public partial class EnemyShip : Area2D
 
     private ProgressBar healthBar;
 
+    private AudioStreamPlayer2D cannonAudioStreamPlayer;
+    private AudioStreamPlayer2D damageAudioStreamPlayer;
+
     public override void _Ready()
     {
         MaxSpeed = (int)random.NextInt64(MinSpeed, MaxSpeed);
@@ -58,6 +61,8 @@ public partial class EnemyShip : Area2D
         healthBar = GetNode<ProgressBar>("HealthBar");
         healthBar.MaxValue = MaxHealth;
         healthBar.Value = curHealth;
+        cannonAudioStreamPlayer = GetNode<AudioStreamPlayer2D>("CannonAudioStreamPlayer2D");
+        damageAudioStreamPlayer = GetNode<AudioStreamPlayer2D>("DamageAudioStreamPlayer2D");
         animatedSprite = GetNode<AnimatedSprite2D>("EnemyAnimSprite2D");
         leftCannonTimer = GetNode<Timer>("LeftCannonTimer");
         rightCannonTimer = GetNode<Timer>("RightCannonTimer");
@@ -86,6 +91,26 @@ public partial class EnemyShip : Area2D
         SetEnemyAnim();
         MoveForward(delta);
         CheckForPlayerInRange();
+    }
+
+    public void HandleCannonballHit()
+    {
+        damageAudioStreamPlayer.Play();
+        curHealth -= 10;
+    }
+
+    public void OnEnemyLeftScreen()
+    {
+        QueueFree();
+    }
+
+    public void CheckForDeath()
+    {
+        if (curHealth <= 0)
+        {
+            EmitSignal(SignalName.EnemySank);
+            QueueFree();
+        }
     }
 
     private void SetEnemyAnim()
@@ -123,18 +148,24 @@ public partial class EnemyShip : Area2D
     {
         if (topLeftCannonRay.IsColliding() && topLeftCannonRay.GetCollider() is PlayerShip || bottomLeftCannonRay.IsColliding() && bottomLeftCannonRay.GetCollider() is PlayerShip)
         {
-            FireCannons("left");
+            if (!firedLeft)
+            {
+                FireCannons("left");
+            }
         }
         if (topRightCannonRay.IsColliding() && topRightCannonRay.GetCollider() is PlayerShip || bottomRightCannonRay.IsColliding() && bottomRightCannonRay.GetCollider() is PlayerShip)
         {
-            FireCannons("right");
+            if (!firedRight)
+            {
+                FireCannons("right");
+            }
         }
     }
 
     private void FireCannons(string direction)
     {
         float shipRotation = Rotation;
-
+        cannonAudioStreamPlayer.Play();
         if (direction == "left" && !firedLeft)
         {
             firedLeft = true;
@@ -190,14 +221,5 @@ public partial class EnemyShip : Area2D
         cannonballInstance.Position = spawnPosition;
         cannonballInstance.Rotation = angle;
         GetTree().CurrentScene.AddChild(cannonballInstance);
-    }
-    public void HandleCannonballHit()
-    {
-        curHealth -= 10;
-        if(curHealth <= 0)
-        {
-            EmitSignal(SignalName.EnemySank);
-            QueueFree();
-        }
     }
 }
