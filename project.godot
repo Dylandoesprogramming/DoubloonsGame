@@ -11,14 +11,9 @@ config_version=5
 [application]
 
 config/name="PirateGame"
-run/main_scene="res://SplashScreen.tscn"
+run/main_scene="res://Game.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://Assets/Art/DevArt/Icon.png"
-
-[autoload]
-
-sp="*res://addons/awesome_splash/utils_splash.gd"
-gd="*res://addons/godot-action/utils_gd_action.tscn"
 
 [display]
 
@@ -29,10 +24,6 @@ window/stretch/mode="canvas_items"
 [dotnet]
 
 project/assembly_name="PirateGame"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/awesome_splash/plugin.cfg", "res://addons/godot-action/plugin.cfg")
 
 [input]
 
