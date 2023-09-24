@@ -56,7 +56,7 @@ MaxHealth = 500
 
 [node name="PlayerAnimSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qo6bu")
-animation = &"forward"
+animation = &"fire_both"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-10, 332, -44, 330, -98, 124, -94, -154, -2, -324, 84, -166, 102, 88, 40, 330)
