@@ -1,16 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnmdkab0va03f"]
+[gd_scene load_steps=6 format=3 uid="uid://dnmdkab0va03f"]
 
 [ext_resource type="PackedScene" uid="uid://0axwjmmjv84n" path="res://Menu.tscn" id="1_2ehg4"]
 [ext_resource type="Script" path="res://Game.cs" id="1_puljw"]
 [ext_resource type="PackedScene" uid="uid://yco6txv2hf8i" path="res://Main.tscn" id="2_8d06s"]
+[ext_resource type="AudioStream" uid="uid://bqqv77x7xsebn" path="res://Assets/Sound/sailor_battle.mp3" id="4_f1wq3"]
+[ext_resource type="PackedScene" uid="uid://b53epopwcwy1b" path="res://FullScreenToggle.tscn" id="5_0osy1"]
 
 [node name="Game" type="Node2D"]
+position = Vector2(0, -3)
 script = ExtResource("1_puljw")
 MainPackedScene = ExtResource("2_8d06s")
 MenuPackedScene = ExtResource("1_2ehg4")
-metadata/_edit_group_ = true
+
+[node name="MusicSlider" type="HScrollBar" parent="."]
+z_index = 1
+offset_left = 1.0
+offset_top = 75.0
+offset_right = 289.0
+offset_bottom = 115.0
+min_value = -100.0
+
+[node name="FullScreenToggle" parent="." instance=ExtResource("5_0osy1")]
+z_index = 1
+position = Vector2(4, 7)
+scale = Vector2(2, 2)
+
+[node name="BackgroundMusicAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_f1wq3")
+autoplay = true
 
 [node name="Menu" parent="." instance=ExtResource("1_2ehg4")]
+metadata/_edit_lock_ = true
 
+[connection signal="value_changed" from="MusicSlider" to="." method="ChangeMusicVolume"]
 [connection signal="PressPlay" from="Menu" to="." method="OnPlayPressed"]
 [connection signal="PressQuit" from="Menu" to="." method="OnQuitPressed"]

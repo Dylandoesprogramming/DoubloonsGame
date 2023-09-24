@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://yco6txv2hf8i"]
+[gd_scene load_steps=6 format=3 uid="uid://yco6txv2hf8i"]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_ifsit"]
 [ext_resource type="PackedScene" uid="uid://bg0ggxpjtfkvg" path="res://PlayerShip.tscn" id="1_y8t6h"]
 [ext_resource type="Texture2D" uid="uid://c31xcokfwubd6" path="res://Assets/Art/DevArt/Icon.png" id="3_1h4iy"]
-[ext_resource type="PackedScene" uid="uid://b53epopwcwy1b" path="res://FullScreenToggle.tscn" id="4_dd522"]
 [ext_resource type="PackedScene" uid="uid://c2b16wixwt0x" path="res://EnemySpawner.tscn" id="4_ovb5b"]
 [ext_resource type="PackedScene" uid="uid://vdwxm5nf4t2x" path="res://ScoreKeeper.tscn" id="5_lyvvk"]
 
@@ -17,9 +16,6 @@ position = Vector2(956, 546)
 z_index = -1
 position = Vector2(958, 490)
 texture = ExtResource("3_1h4iy")
-
-[node name="FullScreenToggle" parent="." instance=ExtResource("4_dd522")]
-scale = Vector2(2, 2)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("4_ovb5b")]
 

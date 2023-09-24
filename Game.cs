@@ -19,9 +19,11 @@ public partial class Game : Node2D
 
     private Menu menu;
     private Main main;
+    private AudioStreamPlayer2D backgroundMusic;
 
     public override void _Ready()
     {
+        backgroundMusic = GetNode<AudioStreamPlayer2D>("BackgroundMusicAudioStreamPlayer2D");
         menu = GetNode<Menu>("Menu");
         GetOrCreateHighScoreFile();
     }
@@ -101,6 +103,11 @@ public partial class Game : Node2D
             file.Close();
         }
         SetHighScore(contents);
+    }
+
+    public void ChangeMusicVolume(float value)
+    {
+        backgroundMusic.VolumeDb = value;
     }
 
     private void SetHighScore(string highScore)
