@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b53epopwcwy1b"]
+[gd_scene load_steps=3 format=3 uid="uid://b53epopwcwy1b"]
 
 [ext_resource type="Script" path="res://FullScreenToggle.cs" id="1_bb24g"]
+[ext_resource type="FontFile" uid="uid://bystmbigkulfe" path="res://Assets/Art/monogram-extended.ttf" id="2_yen4u"]
 
 [node name="FullScreenToggle" type="Node2D"]
 script = ExtResource("1_bb24g")
@@ -9,6 +10,8 @@ metadata/_edit_group_ = true
 [node name="FullScreenToggleButton" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("2_yen4u")
+theme_override_font_sizes/font_size = 25
 text = "Toggle Fullscreen"
 
 [connection signal="pressed" from="FullScreenToggleButton" to="." method="OnFullScreenToggleButtonPressed"]

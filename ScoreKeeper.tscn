@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://vdwxm5nf4t2x"]
+[gd_scene load_steps=4 format=3 uid="uid://vdwxm5nf4t2x"]
 
 [ext_resource type="Script" path="res://ScoreKeeper.cs" id="1_fwil6"]
 [ext_resource type="Texture2D" uid="uid://3rxxpoj40y2b" path="res://Assets/Art/DevArt/ScoreBacking.png" id="2_8f053"]
+[ext_resource type="FontFile" uid="uid://bystmbigkulfe" path="res://Assets/Art/monogram-extended.ttf" id="2_n2haj"]
 
 [node name="ScoreKeeper" type="Node2D"]
+position = Vector2(40, -1)
 script = ExtResource("1_fwil6")
 metadata/_edit_group_ = true
 
@@ -14,14 +16,16 @@ anchor_right = 1.0
 offset_left = -133.0
 offset_top = 1.0
 offset_right = -1.0
-offset_bottom = 27.0
+offset_bottom = 25.0
 grow_horizontal = 0
 size_flags_horizontal = 6
 size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("2_n2haj")
+theme_override_font_sizes/font_size = 25
 text = "Doubloons: 0000"
 
 [node name="ScoreBacking" type="Sprite2D" parent="."]
 show_behind_parent = true
-position = Vector2(-67.5, 12.5)
-scale = Vector2(0.45, 0.23)
+position = Vector2(-68.5, 14)
+scale = Vector2(0.476667, 0.26)
 texture = ExtResource("2_8f053")
