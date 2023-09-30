@@ -218,7 +218,6 @@ public partial class PlayerShip : Area2D
         float factor = -4 * (curSpeed / MaxSpeed - 0.5f) * (curSpeed / MaxSpeed - 0.5f) + 1;
         // Clamp the lower value to 1/10th of MaxRotationSpeed
         var curRotationSpeed = Mathf.Clamp(MaxRotationSpeed * factor, MaxRotationSpeed / 10, MaxRotationSpeed);
-        //GD.Print(curSpeed, curRotationSpeed);
         return curRotationSpeed;
 
     }
